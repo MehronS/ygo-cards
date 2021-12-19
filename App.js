@@ -6,7 +6,8 @@ import {
   View,
   TextInput,
   ScrollView,
-  SafeAreaView,
+  Text,
+  FlatList,
 } from "react-native";
 import axios from "axios";
 import SingleCard from "./components/SingleCard";
@@ -58,43 +59,55 @@ export default function App() {
   }
 
   return (
-    <SafeAreaView>
-      <ScrollView>
-        <View style={styles.container}>
-          {cards ? (
-            cards.map((card) => (
-              <SingleCard card={card} addCard={addCardToList} back={back} />
-            ))
-          ) : (
-            <CardList
-              list={cardList}
-              setCard={setCards}
-              removeCard={removeCard}
-            />
-          )}
-
-          {!cards ? (
-            <View style={styles.search}>
-              <TextInput
-                placeholder="Search Card"
-                style={styles.input}
-                onChangeText={handleChange}
-                value={searchCard}
-              />
-              <View style={styles.buttonContainer}>
-                <Button title="Search Word" onPress={() => getCard(`fname`)} />
-                <Button
-                  title="Search Archetype"
-                  color="#ff5c5c"
-                  onPress={() => getCard(`archetype`)}
+    <View style={styles.container}>
+      {cards ? (
+        <View>
+          <Text>
+            Search Results for {searchCard} : {cards.length} cards
+          </Text>
+          <FlatList
+            keyExtractor={(item, index) => item.id}
+            data={cards}
+            renderItem={(card) => {
+              return (
+                <SingleCard
+                  card={card.item}
+                  addCard={addCardToList}
+                  back={back}
                 />
-              </View>
-            </View>
-          ) : null}
-          <StatusBar style="auto" />
+              );
+            }}
+          />
         </View>
-      </ScrollView>
-    </SafeAreaView>
+      ) : (
+        <ScrollView>
+          <CardList
+            list={cardList}
+            setCard={setCards}
+            removeCard={removeCard}
+          />
+
+          <View style={styles.search}>
+            <TextInput
+              placeholder="Search Card"
+              style={styles.input}
+              onChangeText={handleChange}
+              value={searchCard}
+            />
+            <View style={styles.buttonContainer}>
+              <Button title="Search Word" onPress={() => getCard(`fname`)} />
+              <Button
+                title="Search Archetype"
+                color="#ff5c5c"
+                onPress={() => getCard(`archetype`)}
+              />
+            </View>
+          </View>
+        </ScrollView>
+      )}
+
+      <StatusBar style="auto" />
+    </View>
   );
 }
 
@@ -127,6 +140,6 @@ const styles = StyleSheet.create({
   buttonContainer: {
     justifyContent: `space-around`,
     flexDirection: `row`,
-    width: `70%`,
+    width: `90%`,
   },
 });
