@@ -62,12 +62,9 @@ export default function App() {
       <ScrollView>
         <View style={styles.container}>
           {cards ? (
-            <SingleCard
-              cards={cards}
-              addCard={addCardToList}
-              back={back}
-              searchValue={searchCard}
-            />
+            cards.map((card) => (
+              <SingleCard card={card} addCard={addCardToList} back={back} />
+            ))
           ) : (
             <CardList
               list={cardList}
