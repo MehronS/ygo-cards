@@ -6,7 +6,7 @@ import {
   View,
   TextInput,
   ScrollView,
-  FlatList,
+  SafeAreaView,
 } from "react-native";
 import axios from "axios";
 import SingleCard from "./components/SingleCard";
@@ -17,10 +17,10 @@ export default function App() {
   const [searchCard, setSearchCard] = useState(``);
   const [cardList, setCardList] = useState([]);
 
-  async function getCard() {
+  async function getCard(criteria) {
     try {
       const cardList = await axios.get(
-        `https://db.ygoprodeck.com/api/v7/cardinfo.php?fname=${searchCard}`
+        `https://db.ygoprodeck.com/api/v7/cardinfo.php?${criteria}=${searchCard}`
       );
       if (!cardList) return;
       else {
@@ -58,38 +58,46 @@ export default function App() {
   }
 
   return (
-    <ScrollView>
-      <View style={styles.container}>
-        {cards ? (
-          <SingleCard
-            cards={cards}
-            addCard={addCardToList}
-            back={back}
-            searchValue={searchCard}
-          />
-        ) : (
-          <CardList
-            list={cardList}
-            setCard={setCards}
-            removeCard={removeCard}
-          />
-        )}
-
-        {!cards ? (
-          <View style={styles.search}>
-            <TextInput
-              placeholder="Search Card"
-              style={styles.input}
-              onChangeText={handleChange}
-              value={searchCard}
+    <SafeAreaView>
+      <ScrollView>
+        <View style={styles.container}>
+          {cards ? (
+            <SingleCard
+              cards={cards}
+              addCard={addCardToList}
+              back={back}
+              searchValue={searchCard}
             />
-            <Button title="Search" onPress={() => getCard()} />
-            <Button title="Browse Cards" style={styles.browseButton} />
-          </View>
-        ) : null}
-        <StatusBar style="auto" />
-      </View>
-    </ScrollView>
+          ) : (
+            <CardList
+              list={cardList}
+              setCard={setCards}
+              removeCard={removeCard}
+            />
+          )}
+
+          {!cards ? (
+            <View style={styles.search}>
+              <TextInput
+                placeholder="Search Card"
+                style={styles.input}
+                onChangeText={handleChange}
+                value={searchCard}
+              />
+              <View style={styles.buttonContainer}>
+                <Button title="Search Word" onPress={() => getCard(`fname`)} />
+                <Button
+                  title="Search Archetype"
+                  color="#ff5c5c"
+                  onPress={() => getCard(`archetype`)}
+                />
+              </View>
+            </View>
+          ) : null}
+          <StatusBar style="auto" />
+        </View>
+      </ScrollView>
+    </SafeAreaView>
   );
 }
 
@@ -119,7 +127,9 @@ const styles = StyleSheet.create({
     alignItems: `center`,
   },
 
-  browseButton: {
-    marginTop: 10,
+  buttonContainer: {
+    justifyContent: `space-around`,
+    flexDirection: `row`,
+    width: `70%`,
   },
 });
