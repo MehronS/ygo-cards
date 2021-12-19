@@ -7,47 +7,65 @@ import {
   View,
   Button,
   TextInput,
+  FlatList,
 } from "react-native";
 
-export default function SingleCard({ card, addCard, setCard }) {
+export default function SingleCard({ cards, addCard, back, searchValue }) {
   const [amount, setAmount] = useState(``);
 
   const handleChange = (text) => {
     setAmount(text);
   };
   return (
-    <ScrollView>
-      <View style={styles.container}>
-        <View style={styles.imageContainer}>
-          <Image
-            source={{
-              uri: card.card_images[0].image_url,
-            }}
-            style={styles.cardImage}
-          />
-        </View>
-        <Text>Name: {card.name}</Text>
-        <View style={styles.stats}>
-          {card.atk ? <Text>{`Attack: ` + card.atk}</Text> : null}
-          {card.def ? <Text>{`Defense: ` + card.def}</Text> : null}
-        </View>
-        <Text style={styles.effect}>{card.desc}</Text>
-        <Text style={styles.price}>
-          TCG Player Price: {`$` + card.card_prices[0].tcgplayer_price}
-        </Text>
-        <TextInput
-          placeholder="Select Amount (Default: 1)"
-          onChangeText={handleChange}
-          value={amount.toString()}
-          keyboardType={"numeric"}
-          style={styles.input}
-        />
-        <View style={styles.buttons}>
-          <Button title="Add Card" onPress={() => addCard(amount)} />
-          <Button title="Back" onPress={() => setCard(``)} />
-        </View>
+    <View>
+      <View>
+        <Text>{`Search Results for ${searchValue} : ${cards.length} cards`}</Text>
       </View>
-    </ScrollView>
+      <FlatList
+        keyExtractor={(item, index) => item.id}
+        data={cards}
+        renderItem={(card) => (
+          <View style={styles.container}>
+            <View style={styles.imageContainer}>
+              <Image
+                source={{
+                  uri: card.item.card_images[0].image_url,
+                }}
+                style={styles.cardImage}
+              />
+            </View>
+            <Text>Name: {card.item.name}</Text>
+            <View style={styles.stats}>
+              {card.item.atk ? <Text>{`Attack: ` + card.item.atk}</Text> : null}
+              {card.item.def ? (
+                <Text>{`Defense: ` + card.item.def}</Text>
+              ) : null}
+            </View>
+            <Text style={styles.effect}>{card.item.desc}</Text>
+            <Text style={styles.price}>
+              TCG Player Price: {`$` + card.item.card_prices[0].tcgplayer_price}
+            </Text>
+            <TextInput
+              placeholder="Select Amount (Default: 1)"
+              onChangeText={handleChange}
+              value={amount.toString()}
+              keyboardType={"numeric"}
+              style={styles.input}
+            />
+            <View style={styles.buttons}>
+              <Button
+                title="Add Card(s)"
+                onPress={() => {
+                  addCard(card.item, amount);
+                  setAmount(``);
+                }}
+              />
+              <Button title="Back" onPress={() => back()} />
+            </View>
+          </View>
+        )}
+      />
+    </View>
   );
 }
 
