@@ -92,6 +92,7 @@ const styles = StyleSheet.create({
     flex: 1,
     textAlign: `center`,
     justifyContent: `center`,
+    marginBottom: 5,
   },
 
   name: {
