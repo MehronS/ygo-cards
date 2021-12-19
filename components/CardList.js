@@ -1,12 +1,5 @@
 import React from "react";
-import {
-  View,
-  Text,
-  Image,
-  StyleSheet,
-  ScrollView,
-  TouchableOpacity,
-} from "react-native";
+import { View, Text, Image, StyleSheet, TouchableOpacity } from "react-native";
 
 export default function CardList({ list, setCard, removeCard }) {
   const totalPrice = () => {
@@ -21,13 +14,24 @@ export default function CardList({ list, setCard, removeCard }) {
       return total.toFixed(2);
     }
   };
+
+  const totalCards = () => {
+    let total = 0;
+    if (!list.length) return total;
+    else {
+      list.forEach((card) => {
+        return (total += card.amount);
+      });
+    }
+    return total;
+  };
   return (
-    <ScrollView>
+    <View>
       <View style={styles.container}>
         {list.map((card, index) => {
           return (
             <TouchableOpacity
-              onPress={() => setCard(card)}
+              onPress={() => setCard([card])}
               key={index}
               style={styles.cardContainer}
               onLongPress={() => removeCard(index)}
@@ -41,16 +45,19 @@ export default function CardList({ list, setCard, removeCard }) {
                 />
               </View>
               <View style={styles.cardName}>
-                <Text>{`${card.name} x ${card.amount}`}</Text>
+                <Text
+                  style={styles.name}
+                >{`${card.name} x ${card.amount}`}</Text>
               </View>
             </TouchableOpacity>
           );
         })}
       </View>
+      <Text style={styles.cardName}>Number of Cards: {totalCards()}</Text>
       <Text style={styles.cardName}>
         Total TCG Player Price: {totalPrice()}
       </Text>
-    </ScrollView>
+    </View>
   );
 }
 
@@ -83,6 +90,11 @@ const styles = StyleSheet.create({
 
   cardName: {
     flex: 1,
+    textAlign: `center`,
+    justifyContent: `center`,
+  },
+
+  name: {
     textAlign: `center`,
   },
 });
