@@ -55,7 +55,7 @@ export default function CardList({ list, setCard, removeCard }) {
       </View>
       <Text style={styles.cardName}>Number of Cards: {totalCards()}</Text>
       <Text style={styles.cardName}>
-        Total TCG Player Price: {totalPrice()}
+        Total TCG Player Price: {`$` + totalPrice()}
       </Text>
     </View>
   );
