@@ -63,7 +63,9 @@ export default function App() {
       {cards ? (
         <View>
           <Text>
-            Search Results for {searchCard} : {cards.length} cards
+            {cards.length > 1
+              ? `Search Results for ${searchCard} : ${cards.length} cards`
+              : null}
           </Text>
           <FlatList
             keyExtractor={(item, index) => item.id}
