@@ -1,5 +1,6 @@
 import React from "react";
 import { View, Text, Image, StyleSheet, TouchableOpacity } from "react-native";
+import colors from "../constants/colors.js";
 
 export default function CardList({ list, setCard, removeCard }) {
   const totalPrice = () => {
@@ -66,7 +67,7 @@ const styles = StyleSheet.create({
     flex: 1,
     flexDirection: `row`,
     flexWrap: `wrap`,
-    marginVertical: 50,
+    // marginVertical: 50,
     justifyContent: `flex-start`,
   },
 
@@ -93,9 +94,11 @@ const styles = StyleSheet.create({
     textAlign: `center`,
     justifyContent: `center`,
     marginBottom: 5,
+    color: colors.textColor,
   },
 
   name: {
     textAlign: `center`,
+    color: colors.textColor,
   },
 });

@@ -1,14 +1,6 @@
 import React, { useState } from "react";
-import {
-  ScrollView,
-  Text,
-  Image,
-  StyleSheet,
-  View,
-  Button,
-  TextInput,
-  FlatList,
-} from "react-native";
+import { Text, Image, StyleSheet, View, Button, TextInput } from "react-native";
+import colors from "../constants/colors";
 
 export default function SingleCard({ card, addCard, back }) {
   const [amount, setAmount] = useState(``);
@@ -26,10 +18,19 @@ export default function SingleCard({ card, addCard, back }) {
           style={styles.cardImage}
         />
       </View>
-      <Text>Name: {card.name}</Text>
+      <Text style={styles.name}>Name: {card.name}</Text>
+
       <View style={styles.stats}>
-        {card.atk ? <Text>{`Attack: ` + card.atk}</Text> : null}
-        {card.def ? <Text>{`Defense: ` + card.def}</Text> : null}
+        {card.atk ? (
+          <Text style={{ color: colors.textColor }}>
+            {`Attack: ` + card.atk}
+          </Text>
+        ) : null}
+        {card.def ? (
+          <Text style={{ color: colors.textColor }}>
+            {`Defense: ` + card.def}
+          </Text>
+        ) : null}
       </View>
       <Text style={styles.effect}>{card.desc}</Text>
       <Text style={styles.price}>
@@ -40,7 +41,8 @@ export default function SingleCard({ card, addCard, back }) {
           placeholder="Select Amount (Default: 1)"
           onChangeText={handleChange}
           value={amount.toString()}
-          keyboardType={"numeric"}
+          keyboardType={"number-pad"}
+          maxLength={3}
           style={styles.input}
         />
         <View style={styles.buttons}>
@@ -51,7 +53,7 @@ export default function SingleCard({ card, addCard, back }) {
               setAmount(``);
             }}
           />
-          <Button title="Back" onPress={() => back()} />
+          <Button title="Back" onPress={() => back()} color="#ff5c5c" />
         </View>
       </View>
     </View>
@@ -61,19 +63,22 @@ export default function SingleCard({ card, addCard, back }) {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#fff",
     alignItems: "center",
     justifyContent: "center",
-    marginVertical: 50,
   },
   effect: {
     textAlign: "center",
+    color: colors.textColor,
+    borderBottomWidth: 10,
+    borderColor: `transparent`,
   },
 
   stats: {
     flexDirection: `row`,
     justifyContent: `space-between`,
     width: `50%`,
+    borderBottomWidth: 10,
+    borderColor: `transparent`,
   },
 
   cardImage: {
@@ -92,6 +97,8 @@ const styles = StyleSheet.create({
     flexDirection: `row`,
     justifyContent: `space-around`,
     width: 300,
+    marginTop: 10,
+    marginBottom: 30,
   },
 
   input: {
@@ -99,14 +106,31 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     padding: 10,
     width: 300,
+    borderRadius: 8,
     marginVertical: 10,
+    shadowColor: `black`,
+    shadowOffset: {
+      width: 0,
+      height: 2,
+    },
+    shadowRadius: 6,
+    shadowOpacity: 0.26,
+    backgroundColor: `white`,
+    elevation: 10, // for android shadow
   },
 
   price: {
     marginVertical: 5,
+    color: colors.textColor,
   },
 
   inputButtonsContainer: {
     alignItems: `center`,
+  },
+
+  name: {
+    color: colors.textColor,
+    borderBottomWidth: 10,
+    borderColor: `transparent`,
   },
 });
