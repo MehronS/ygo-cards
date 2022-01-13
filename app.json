@@ -1,7 +1,7 @@
 {
   "expo": {
-    "name": "ygo-price-checker",
-    "slug": "ygo-price-checker",
+    "name": "ygo-card-checker",
+    "slug": "ygo-card-checker",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "assets/playstore-icon.png",

@@ -1,5 +1,5 @@
 {
-  "name": "ygo-price-checker",
+  "name": "ygo-card-checker",
   "version": "1.0.0",
   "main": "node_modules/expo/AppEntry.js",
   "scripts": {
