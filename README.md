@@ -2,12 +2,15 @@
 
 This mobile app is built to check information on any yugioh card or archetype as well as check the recent prices on TCG Player.
 
+<br />
 Search the cards/archetype you want to see
 ![Alt text](assets/DM.png?raw=true "Searched Card(s)")
 
+<br />
 Add card(s) to your list to see the full cost
 ![Alt text](assets/list.png?raw=true "Card List")
 
+<br />
 Click card on list to see more detail or press hold to delete card(s) from list
 ![Alt text](assets/singlecard.png?raw=true "Card List")
 
